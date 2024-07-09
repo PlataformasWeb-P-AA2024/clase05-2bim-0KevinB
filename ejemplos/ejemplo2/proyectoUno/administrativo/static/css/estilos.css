@@ -7,10 +7,6 @@ body {
 
 }
 
-header {
-  background: #034275;
-  color: #FFF;
-}
 /* manejo de las características de la etiqueta table*/
 
 section {
@@ -76,9 +72,4 @@ label {
   margin-bottom:5px;
   text: #FFF;
 
-}
-
-footer{
-  background: #5E5E5E;
-  color: #FFF;
 }
