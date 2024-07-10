@@ -18,7 +18,7 @@ th, td {
   border-bottom: 1px solid black;
 }
 
-tr:hover {
+th:hover {
   background-color: #258EAD;
 }
 

@@ -1,230 +1,53 @@
 {% extends "master.html" %}
+
 {% block title %}
-index
+  Listado de Estudiantes
 {% endblock %}
+
 {% block content %}
-<div id="page-wrapper">
+<h3>Número de estudiantes {{ numero_estudiantes }}</h3>
 
-  <!-- Header -->
-  <div id="header-wrapper">
-    <header id="header" class="container">
+<table id="tabla_datos">
 
-      <!-- Logo -->
-      <div id="logo">
-        <h1><a href="index.html">Verti</a></h1>
-        <span>by HTML5 UP</span>
-      </div>
+  <thead>
+    <tr>
+      <th>Estudiante</th>
+      <th>Cedula</th>
+      <th>Correo</th>
+      <th>Numeros Telefónico </th>
+      <th>Opciones</th>
+    </tr>
+  </thead>
 
-      <!-- Nav -->
-      <nav id="nav">
-        <ul>
-          <li class="current"><a href="index.html">Welcome</a></li>
+  {% for e in estudiantes %}
+  <tr>
+    <td> {{e.nombre}} {{e.apellido}}</td>
+    <td> {{e.cedula}}</td>
+    <td> {{e.correo}}</td>
+    <td>
+      <ul>
+        {% for t in e.numeros_telefonicos.all %}
           <li>
-            <a href="#">Dropdown</a>
-            <ul>
-              <li><a href="#">Lorem ipsum dolor</a></li>
-              <li><a href="#">Magna phasellus</a></li>
-              <li>
-                <a href="#">Phasellus consequat</a>
-                <ul>
-                  <li><a href="#">Lorem ipsum dolor</a></li>
-                  <li><a href="#">Phasellus consequat</a></li>
-                  <li><a href="#">Magna phasellus</a></li>
-                  <li><a href="#">Etiam dolore nisl</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Veroeros feugiat</a></li>
-            </ul>
+            <span>{{t.telefono}} - {{t.tipo}} - [<a href="{% url 'editar_numero_telefonico' t.id %}">editar</a>] </span>
           </li>
-          <li><a href="left-sidebar.html">Left Sidebar</a></li>
-          <li><a href="right-sidebar.html">Right Sidebar</a></li>
-          <li><a href="no-sidebar.html">No Sidebar</a></li>
-        </ul>
-      </nav>
-
-    </header>
-  </div>
-
-  <!-- Banner -->
-  <div id="banner-wrapper">
-    <div id="banner" class="box container">
-      <div class="row">
-        <div class="col-7 col-12-medium">
-          <h2>Hi. This is Verti.</h2>
-          <p>It's a free responsive site template by HTML5 UP</p>
-        </div>
-        <div class="col-5 col-12-medium">
-          <ul>
-            <li><a href="#" class="button large icon solid fa-arrow-circle-right">Ok let's go</a></li>
-            <li><a href="#" class="button alt large icon solid fa-question-circle">More info</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Features -->
-  <div id="features-wrapper">
-    <div class="container">
-      <div class="">
-        {% load socialaccount %}
-        {% load account %}
-        {% if messages %}
-        <div class="messages">
-          {% for message in messages %}
-          <span{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</span>
-            {% endfor %}
-        </div>
-        {% endif %}
-      </div>
-
-      <h3>Número de estudiantes {{ numero_estudiantes }}</h3>
-
-      <table id="tabla_datos">
-
-        <thead>
-          <tr>
-            <th>Estudiante</th>
-            <th>Cedula</th>
-            <th>Correo</th>
-            <th>Numeros Telefónico </th>
-            <th>Opciones</th>
-          </tr>
-        </thead>
-
-        {% for e in estudiantes %}
-        <tr>
-          <td> {{e.nombre}} {{e.apellido}}</td>
-          <td> {{e.cedula}}</td>
-          <td> {{e.correo}}</td>
-          <td>
-            <ul>
-              {% for t in e.numeros_telefonicos.all %}
-              <li>
-                <span>{{t.telefono}} - {{t.tipo}} - [<a href="{% url 'editar_numero_telefonico' t.id %}">editar</a>]
-                </span>
-              </li>
-              {% endfor %}
-            </ul>
-            [<a href="{% url 'crear_numero_telefonico_estudiante' e.id%}">+Teléfono</a>]
-          </td>
-          <td> <a href="{% url 'obtener_estudiante' e.id %}">ver</a> <br>
-            <a href="{% url 'editar_estudiante' e.id %}">editar</a> <br>
-            <a href="{% url 'eliminar_estudiante' e.id %}" onclick="return confirm('¿Está seguro de la eliminación?')">
-              eliminar</a>
-          </td>
-
-        </tr>
         {% endfor %}
-      </table>
+      </ul>
+        [<a href="{% url 'crear_numero_telefonico_estudiante' e.id%}">+Teléfono</a>]
+    </td>
+    <td> <a href="{% url 'obtener_estudiante' e.id %}">ver</a> <br>
+      <a href="{% url 'editar_estudiante' e.id %}">editar</a> <br>
+      <a href="{% url 'eliminar_estudiante' e.id %}"
+      onclick="return confirm('¿Está seguro de la eliminación?')" >
+      eliminar</a>
+    </td>
 
-      <script type="text/javascript">
-        $(document).ready(function () {
-          $('#tabla_datos').DataTable();
-        });
-      </script>
-    </div>
-  </div>
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/js/jquery.dropotron.min.js"></script>
-  <script src="assets/js/browser.min.js"></script>
-  <script src="assets/js/breakpoints.min.js"></script>
-  <script src="assets/js/util.js"></script>
-  <script src="assets/js/main.js"></script>
+  </tr>
+  {% endfor %}
+</table>
 
-
-</div>
-</div>
-
-<!-- Footer -->
-<div id="footer-wrapper">
-  <footer id="footer" class="container">
-    <div class="row">
-      <div class="col-3 col-6-medium col-12-small">
-
-        <!-- Links -->
-        <section class="widget links">
-          <h3>Random Stuff</h3>
-          <ul class="style2">
-            <li><a href="#">Etiam feugiat condimentum</a></li>
-            <li><a href="#">Aliquam imperdiet suscipit odio</a></li>
-            <li><a href="#">Sed porttitor cras in erat nec</a></li>
-            <li><a href="#">Felis varius pellentesque potenti</a></li>
-            <li><a href="#">Nullam scelerisque blandit leo</a></li>
-          </ul>
-        </section>
-
-      </div>
-      <div class="col-3 col-6-medium col-12-small">
-
-        <!-- Links -->
-        <section class="widget links">
-          <h3>Random Stuff</h3>
-          <ul class="style2">
-            <li><a href="#">Etiam feugiat condimentum</a></li>
-            <li><a href="#">Aliquam imperdiet suscipit odio</a></li>
-            <li><a href="#">Sed porttitor cras in erat nec</a></li>
-            <li><a href="#">Felis varius pellentesque potenti</a></li>
-            <li><a href="#">Nullam scelerisque blandit leo</a></li>
-          </ul>
-        </section>
-
-      </div>
-      <div class="col-3 col-6-medium col-12-small">
-
-        <!-- Links -->
-        <section class="widget links">
-          <h3>Random Stuff</h3>
-          <ul class="style2">
-            <li><a href="#">Etiam feugiat condimentum</a></li>
-            <li><a href="#">Aliquam imperdiet suscipit odio</a></li>
-            <li><a href="#">Sed porttitor cras in erat nec</a></li>
-            <li><a href="#">Felis varius pellentesque potenti</a></li>
-            <li><a href="#">Nullam scelerisque blandit leo</a></li>
-          </ul>
-        </section>
-
-      </div>
-      <div class="col-3 col-6-medium col-12-small">
-
-        <!-- Contact -->
-        <section class="widget contact last">
-          <h3>Contact Us</h3>
-          <ul>
-            <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-            <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-            <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-            <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-            <li><a href="#" class="icon brands fa-pinterest"><span class="label">Pinterest</span></a></li>
-          </ul>
-          <p>1234 Fictional Road<br />
-            Nashville, TN 00000<br />
-            (800) 555-0000</p>
-        </section>
-
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <div id="copyright">
-          <ul class="menu">
-            <li>&copy; Untitled. All rights reserved</li>
-            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </footer>
-</div>
-
-</div>
-
-<!-- Scripts -->
-
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.dropotron.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
+<script type="text/javascript">
+  $(document).ready( function () {
+    $('#tabla_datos').DataTable();
+  });
+</script>
 {% endblock %}

@@ -6,8 +6,9 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+
+
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 
@@ -17,6 +18,15 @@
     </title>
   </head>
 	<body class="is-preload homepage">
+				<!-- Scripts -->
+
+				<script type="text/javascript src="{% static 'js/jquery.min.js' %}"></script>
+				<script type="text/javascript src="{% static 'js/jquery.dropotron.min.js' %}"></script>
+				<script type="text/javascript src="{% static 'js/browser.min.js' %}"></script>
+				<script type="text/javascript src="{% static 'js/breakpoints.min.js' %}"></script>
+				<script type="text/javascript src="{% static 'js/util.js' %}"></script>
+				<script type="text/javascript src="{% static 'js/main.js' %}"></script>
+				
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -25,44 +35,43 @@
 
 						<!-- Logo -->
 							<div id="logo">
-								<h1><a href="index.html">Verti</a></h1>
+								<h1><a href="index.html">UTPL</a></h1>
                 {% if user.is_authenticated %}
                 <span class="nombre_usuario"> Bienvenido: {{user.username}} </span>
                 {% endif %}
 							</div>
 
-
 						<!-- Nav -->
 							<nav id="nav">
+								{% load socialaccount %}
+								{% load account %}
 								<ul>
-									<li class="current"><a href="{% url 'index' %}">Inicio</a></li>
-                  <li><a href="{% url 'crear_numero_telefonico' %}">agregar telefono</a></li>
-
-									<li><a href="left-sidebar.html">Left Sidebar</a></li>
-									<li><a href="right-sidebar.html">Right Sidebar</a></li>
-									<li><a href="no-sidebar.html">No Sidebar</a></li>
-								</ul>
+									<li class="{% if request.path == '/' %}current{% endif %}">
+									  <a href="{% url 'index' %}">inicio</a>
+									</li>
+									<li class="{% if request.path == '/crear/estudiante' %}current{% endif %}">
+									  <a href="{% url 'crear_estudiante' %}">agregar estudiante</a>
+									</li>
+									<li class="{% if request.path == '/crear/numero/telefonico' %}current{% endif %}">
+									  <a href="{% url 'crear_numero_telefonico' %}">agregar telefono</a>
+									</li>
+									{% if user.is_authenticated %}
+									  <li class="{% if request.path == '/logout/' %}current{% endif %}">
+										<a href="{% url 'logout_view' %}">salir</a>
+									  </li>
+									{% else %}
+									  <li class="{% if request.path == '/entrando/login/' %}current{% endif %}">
+										[<a href="{% url 'login' %}">ingresar</a>]
+									  </li>
+									  <li class="{% if request.path == '/accounts/github/login/' %}current{% endif %}">
+										[<a href="{% provider_login_url 'github' %}">ingresar con GitHub</a>]
+									  </li>
+									{% endif %}
+								  </ul>
+								  
 							</nav>
 
 					</header>
-				</div>
-
-			<!-- Banner -->
-				<div id="banner-wrapper">
-					<div id="banner" class="box container">
-						<div class="row">
-							<div class="col-7 col-12-medium">
-								<h2>Hi. This is Verti.</h2>
-								<p>It's a free responsive site template by HTML5 UP</p>
-							</div>
-							<div class="col-5 col-12-medium">
-								<ul>
-									<li><a href="#" class="button large icon solid fa-arrow-circle-right">Ok let's go</a></li>
-									<li><a href="#" class="button alt large icon solid fa-question-circle">More info</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
 				</div>
 
 			<!-- Features -->
@@ -84,13 +93,6 @@
 							{% block content %}
 							{% endblock %}
 						</section>
-
-								  <script src="s/js/jquery.min.js"></script>
-								  <script src="assets/js/jquery.dropotron.min.js"></script>
-								  <script src="assets/js/browser.min.js"></script>
-								  <script src="assets/js/breakpoints.min.js"></script>
-								  <script src="assets/js/util.js"></script>
-								  <script src="assets/js/main.js"></script>
 					
 					  
 					</div>
@@ -178,14 +180,6 @@
 
 			</div>
 
-		<!-- Scripts -->
-
-			<script src="{% static 'js/jquery.min.js' %}"></script>
-			<script src="{% static 'js/jquery.dropotron.min.js' %}"></script>
-			<script src="{% static 'js/browser.min.js' %}"></script>
-			<script src="{% static 'js/breakpoints.min.js' %}"></script>
-			<script src="{% static 'js/util.js' %}"></script>
-			<script src="{% static 'js/main.js' %}"></script>
 
 	</body>
 </html>
