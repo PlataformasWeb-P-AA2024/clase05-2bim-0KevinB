@@ -35,7 +35,8 @@
 
 						<!-- Logo -->
 							<div id="logo">
-								<h1><a href="index.html">UTPL</a></h1>
+								<a href="">    <img src="{% static 'images/logo.png' %}" alt="My image">
+								</a>
                 {% if user.is_authenticated %}
                 <span class="nombre_usuario"> Bienvenido: {{user.username}} </span>
                 {% endif %}
